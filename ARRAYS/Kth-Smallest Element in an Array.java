@@ -1,15 +1,18 @@
 class Solution{
-    public static int kthSmallest(int[] arr, int l, int r, int k) 
+    public static int kthSmallest(int[] nums, int l, int r, int k) 
     { 
-        int N = arr.length;
-        Set<Integer> s = new TreeSet<Integer>();
-        for (int i = 0; i < N; i++)
-            s.add(arr[i]);
-        Iterator<Integer> itr = s.iterator();
-        while (k > 1) {
-            itr.next();
-            k--;
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for (int i = 0; i < k; i++) {
+            minHeap.offer(nums[i]);
         }
-        return itr.next();
+        for (int i = k; i < nums.length; i++) {
+            if (nums[i] < minHeap.peek()) {
+                minHeap.poll();
+                minHeap.offer(nums[i]);
+            }
+        }
+        
+        return minHeap.peek();
     } 
 }
