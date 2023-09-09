@@ -1,29 +1,30 @@
-/*
-class Node {
-   int data;
-   Node next;
-
-  Node(int data) {
-      this.data = data;
-  }
-}
-*/
 class Solution
 {
+    Node reverse(Node head){    
+        if(head==null || head.next==null){
+            return head;
+        }
+        Node temp = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return temp;
+    }
     Node compute(Node head)
     {
-        Node temp=head;
-        while(temp.next!=null)
-        {
-            if(temp.data<temp.next.data)
-            {
-              temp.data=temp.next.data;
-              temp.next=temp.next.next;
-              temp=head;
-              
+        // your code here
+        Node rev = reverse(head);
+        Node temp = rev;
+        int max = temp.data;
+        
+        while(temp.next!=null){
+            if(max<temp.next.data){
+                max = temp.next.data;
+                temp = temp.next;
             }
-            else  temp=temp.next;
+            else{
+                temp.next = temp.next.next;
+            }
         }
-        return head; 
+        return reverse(rev);
     }
 }
